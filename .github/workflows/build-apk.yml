@@ -21,6 +21,14 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build Android APK
+      - name: Check Android project
         run: |
-          echo "Android project setup is required before building."
+          if [ ! -d android-wrapper ]; then
+            echo "Android wrapper folder is missing."
+            exit 1
+          fi
+          if [ ! -f android-wrapper/gradlew ]; then
+            echo "Gradle wrapper is missing."
+            exit 1
+          fi
+          echo "Android wrapper found."
